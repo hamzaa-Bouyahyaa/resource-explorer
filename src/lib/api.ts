@@ -122,25 +122,6 @@ export class CharacterRepository {
 
     return response.data;
   }
-
-  /**
-   * Get multiple characters by IDs
-   */
-  static async getCharactersByIds(
-    ids: number[],
-    signal?: AbortSignal
-  ): Promise<Character[]> {
-    if (ids.length === 0) return [];
-
-    const idsString = ids.join(",");
-    const response: AxiosResponse<Character[]> = await apiClient.get(
-      `${API_ENDPOINTS.CHARACTERS}/${idsString}`,
-      { signal }
-    );
-
-    // API returns single object if only one ID, array if multiple
-    return Array.isArray(response.data) ? response.data : [response.data];
-  }
 }
 
 /**
@@ -244,5 +225,29 @@ export const apiUtils = {
    */
   isAbortError: (error: unknown): boolean => {
     return error instanceof Error && error.name === "AbortError";
+  },
+
+  /**
+   * Check if error is a "no results found" 404 error from the API
+   */
+  isNoResultsError: (error: unknown): error is ApiError => {
+    return !!(
+      error &&
+      typeof error === "object" &&
+      "error" in error &&
+      (error as ApiError).error === "Not Found"
+    );
+  },
+
+  /**
+   * Check if filters are applied (excluding default page)
+   */
+  hasActiveFilters: (filters: Record<string, unknown>): boolean => {
+    return Object.entries(filters).some(([key, value]) => {
+      if (key === "page" && (value === 1 || value === undefined)) {
+        return false; // Page 1 is default, not considered an active filter
+      }
+      return value !== undefined && value !== null && value !== "";
+    });
   },
 };

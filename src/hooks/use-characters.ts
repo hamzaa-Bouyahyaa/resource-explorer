@@ -3,17 +3,42 @@
  */
 
 import { useQuery } from "@tanstack/react-query";
-import { CharacterRepository } from "@/lib";
-import { CharacterFilters } from "@/types";
+import { CharacterRepository, apiUtils } from "@/lib";
+import { CharacterFilters, ApiResponse, Character } from "@/types";
 import { queryKeys } from "@/lib/query-client";
 
 /**
  * Hook to fetch paginated characters with filters
+ * Handles 404 responses as "no results found" instead of errors
  */
 export function useCharacters(filters: CharacterFilters = {}) {
   return useQuery({
     queryKey: queryKeys.characters.list(filters),
-    queryFn: ({ signal }) => CharacterRepository.getCharacters(filters, signal),
+    queryFn: async ({ signal }) => {
+      try {
+        return await CharacterRepository.getCharacters(filters, signal);
+      } catch (error) {
+        // Check if it's a 404 "no results" error when filters are applied
+        if (
+          apiUtils.hasActiveFilters(filters) &&
+          apiUtils.isNoResultsError(error)
+        ) {
+          // Return empty results instead of throwing error
+          return {
+            info: {
+              count: 0,
+              pages: 0,
+              next: null,
+              prev: null,
+            },
+            results: [],
+          } as ApiResponse<Character>;
+        }
+
+        // Re-throw other errors
+        throw error;
+      }
+    },
     // Keep previous data while fetching new data for better UX
     placeholderData: (previousData) => previousData,
     // Refetch when filters change
@@ -31,18 +56,5 @@ export function useCharacter(id: number, enabled: boolean = true) {
     enabled: enabled && id > 0,
     // Character data doesn't change often, so we can cache it longer
     staleTime: 1000 * 60 * 10, // 10 minutes
-  });
-}
-
-/**
- * Hook to fetch multiple characters by IDs (for favorites)
- */
-export function useCharactersByIds(ids: number[], enabled: boolean = true) {
-  return useQuery({
-    queryKey: queryKeys.characters.list({ ids: ids.join(",") }),
-    queryFn: ({ signal }) =>
-      CharacterRepository.getCharactersByIds(ids, signal),
-    enabled: enabled && ids.length > 0,
-    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }

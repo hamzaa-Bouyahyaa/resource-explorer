@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, Suspense } from "react";
 import { useCharacters, useUrlState } from "@/hooks";
 import {
   CharacterGrid,
   SearchFilterBar,
   Pagination,
 } from "@/components/features";
+import { Loading } from "@/components/ui";
 import { sortCharacters } from "@/lib";
 import { PAGINATION } from "@/constants";
 
-export default function Home() {
+function HomeContent() {
   const {
     debouncedFilters,
     sortConfig,
@@ -104,5 +105,19 @@ export default function Home() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <Loading className="w-12 h-12" />
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }

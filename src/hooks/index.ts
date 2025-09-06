@@ -2,11 +2,7 @@
  * Central export file for all custom hooks
  */
 
-export {
-  useCharacters,
-  useCharacter,
-  useCharactersByIds,
-} from "./use-characters";
+export { useCharacters, useCharacter } from "./use-characters";
 
 export { useDebounce } from "./use-debounce";
 export { useUrlState } from "./use-url-state";
