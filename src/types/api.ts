@@ -83,3 +83,29 @@ export interface LocationFilters extends Record<string, unknown> {
   dimension?: string;
   page?: number;
 }
+
+/**
+ * Favorites-related types
+ */
+export interface FavoriteCharacter {
+  id: number;
+  name: string;
+  image: string;
+  status: Character["status"];
+  species: string;
+  addedAt: string;
+}
+
+export interface FavoritesState {
+  favorites: FavoriteCharacter[];
+  count: number;
+}
+
+export interface FavoritesActions {
+  addFavorite: (character: Character) => void;
+  removeFavorite: (characterId: number) => void;
+  toggleFavorite: (character: Character) => void;
+  isFavorite: (characterId: number) => boolean;
+  clearFavorites: () => void;
+  getFavoriteById: (characterId: number) => FavoriteCharacter | undefined;
+}

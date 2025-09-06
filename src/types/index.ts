@@ -11,6 +11,9 @@ export type {
   CharacterFilters,
   EpisodeFilters,
   LocationFilters,
+  FavoriteCharacter,
+  FavoritesState,
+  FavoritesActions,
 } from "./api";
 
 /**

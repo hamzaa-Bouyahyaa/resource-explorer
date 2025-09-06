@@ -3,12 +3,16 @@
  */
 
 import React from "react";
+import Link from "next/link";
 
 interface EmptyStateProps {
   title: string;
   description: string;
   icon?: React.ReactNode;
   action?: React.ReactNode;
+  actionLabel?: string;
+  actionHref?: string;
+  onAction?: () => void;
   className?: string;
 }
 
@@ -20,6 +24,9 @@ export function EmptyState({
   description,
   icon,
   action,
+  actionLabel,
+  actionHref,
+  onAction,
   className = "",
 }: EmptyStateProps) {
   const defaultIcon = (
@@ -48,6 +55,27 @@ export function EmptyState({
       <p className="text-gray-600 mb-6 max-w-md mx-auto">{description}</p>
 
       {action && <div>{action}</div>}
+
+      {/* Built-in action button */}
+      {actionLabel && (actionHref || onAction) && (
+        <div>
+          {actionHref ? (
+            <Link
+              href={actionHref}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            >
+              {actionLabel}
+            </Link>
+          ) : (
+            <button
+              onClick={onAction}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            >
+              {actionLabel}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

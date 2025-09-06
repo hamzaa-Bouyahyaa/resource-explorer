@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useMemo, Suspense } from "react";
-import { useCharacters, useUrlState } from "@/hooks";
+import React, { useState, useMemo, Suspense } from "react";
+import { useCharacters, useUrlState, useFavorites } from "@/hooks";
 import {
   CharacterGrid,
   SearchFilterBar,
@@ -10,8 +10,11 @@ import {
 import { Loading } from "@/components/ui";
 import { sortCharacters } from "@/lib";
 import { PAGINATION } from "@/constants";
+import { FavoriteCharacter } from "@/types";
 
 function HomeContent() {
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
   const {
     debouncedFilters,
     sortConfig,
@@ -22,39 +25,41 @@ function HomeContent() {
     clearFilters,
   } = useUrlState();
 
+  const { favorites } = useFavorites();
+
   // Fetch characters data using debounced filters
   const { data, isLoading, isError, error, refetch } =
     useCharacters(debouncedFilters);
 
-  // Apply client-side sorting to the fetched characters
-  const sortedCharacters = useMemo(() => {
+  // Apply client-side sorting and favorites filtering to the fetched characters
+  const processedCharacters = useMemo(() => {
     if (!data?.results) return [];
-    return sortCharacters(data.results, sortConfig);
-  }, [data?.results, sortConfig]);
+
+    let characters = [...data.results];
+
+    // Apply favorites filter if enabled
+    if (showFavoritesOnly) {
+      const favoriteIds = new Set(
+        favorites.map((fav: FavoriteCharacter) => fav.id)
+      );
+      characters = characters.filter((character) =>
+        favoriteIds.has(character.id)
+      );
+    }
+
+    // Apply sorting
+    return sortCharacters(characters, sortConfig);
+  }, [data?.results, sortConfig, showFavoritesOnly, favorites]);
 
   // Extract pagination and result info
   const currentPage = debouncedFilters.page || PAGINATION.DEFAULT_PAGE;
   const totalPages = data?.info.pages || 0;
-  const totalItems = data?.info.count || 0;
+  const totalItems = showFavoritesOnly
+    ? processedCharacters.length
+    : data?.info.count || 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Resource Explorer
-              </h1>
-              <p className="mt-1 text-sm text-gray-600">
-                Explore characters from the Rick and Morty universe
-              </p>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filter Bar */}
@@ -70,6 +75,8 @@ function HomeContent() {
             onSpeciesChange={(value) => updateFilter("species", value)}
             sortConfig={sortConfig}
             onSortChange={(key, direction) => updateSort({ key, direction })}
+            showFavoritesOnly={showFavoritesOnly}
+            onFavoritesToggle={setShowFavoritesOnly}
             hasActiveFilters={hasActiveFilters}
             onClearFilters={clearFilters}
             isLoading={isLoading}
@@ -80,7 +87,7 @@ function HomeContent() {
         {/* Character Grid */}
         <div className="mb-8">
           <CharacterGrid
-            characters={sortedCharacters}
+            characters={processedCharacters}
             isLoading={isLoading}
             isError={isError}
             error={error}
@@ -91,18 +98,21 @@ function HomeContent() {
         </div>
 
         {/* Pagination */}
-        {!isLoading && !isError && sortedCharacters.length > 0 && (
-          <div className="mt-8">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              totalItems={totalItems}
-              itemsPerPage={PAGINATION.ITEMS_PER_PAGE}
-              onPageChange={(page) => updateFilter("page", page)}
-              showInfo={true}
-            />
-          </div>
-        )}
+        {!isLoading &&
+          !isError &&
+          processedCharacters.length > 0 &&
+          !showFavoritesOnly && (
+            <div className="mt-8">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalItems={totalItems}
+                itemsPerPage={PAGINATION.ITEMS_PER_PAGE}
+                onPageChange={(page) => updateFilter("page", page)}
+                showInfo={true}
+              />
+            </div>
+          )}
       </main>
     </div>
   );

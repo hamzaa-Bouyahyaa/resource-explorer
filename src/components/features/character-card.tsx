@@ -6,6 +6,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Character } from "@/types";
+import { CompactFavoriteButton } from "@/components/ui/favorite-button";
 
 interface CharacterCardProps {
   character: Character;
@@ -50,8 +51,11 @@ export function CharacterCard({
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
 
+          {/* Favorite button */}
+          <CompactFavoriteButton character={character} />
+
           {/* Status indicator */}
-          <div className="absolute top-3 right-3">
+          <div className="absolute top-2 left-2">
             <div className="flex items-center space-x-1 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 text-xs font-medium">
               <div
                 className={`w-2 h-2 rounded-full ${getStatusColor(

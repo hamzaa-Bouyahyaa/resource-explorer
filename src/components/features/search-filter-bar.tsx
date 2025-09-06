@@ -2,6 +2,7 @@ import React from "react";
 import { SearchInput } from "./search-input";
 import { StatusFilter, GenderFilter, SpeciesFilter } from "./filter-dropdown";
 import { SortDropdown } from "./sort-dropdown";
+import { FavoritesFilter } from "./favorites-filter";
 import { SortConfig, SortOption, SortDirection } from "@/types";
 
 interface SearchFilterBarProps {
@@ -20,6 +21,10 @@ interface SearchFilterBarProps {
   // Sort
   sortConfig: SortConfig;
   onSortChange: (key: SortOption, direction: SortDirection) => void;
+
+  // Favorites filter
+  showFavoritesOnly?: boolean;
+  onFavoritesToggle?: (showFavoritesOnly: boolean) => void;
 
   // Clear filters
   hasActiveFilters: boolean;
@@ -48,6 +53,8 @@ export function SearchFilterBar({
   onSpeciesChange,
   sortConfig,
   onSortChange,
+  showFavoritesOnly,
+  onFavoritesToggle,
   hasActiveFilters,
   onClearFilters,
   isLoading = false,
@@ -95,6 +102,17 @@ export function SearchFilterBar({
           disabled={isLoading}
         />
       </div>
+
+      {/* Favorites Filter */}
+      {onFavoritesToggle && (
+        <div className="mb-4">
+          <FavoritesFilter
+            showFavoritesOnly={showFavoritesOnly || false}
+            onToggle={onFavoritesToggle}
+            className="w-fit"
+          />
+        </div>
+      )}
 
       {/* Results Info and Clear Filters */}
       <div className="flex items-center justify-between text-sm">

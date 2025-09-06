@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCharacter } from "@/hooks";
 import { Loading, ErrorDisplay } from "@/components/ui";
+import { LabeledFavoriteButton } from "@/components/ui/favorite-button";
 import { apiUtils } from "@/lib";
 
 /**
@@ -153,6 +154,14 @@ export default function CharacterDetailPage() {
                   />
                   {character.status}
                 </span>
+              </div>
+
+              {/* Favorite Button */}
+              <div className="mb-6">
+                <LabeledFavoriteButton
+                  character={character}
+                  className="w-full sm:w-auto"
+                />
               </div>
 
               {/* Character Details */}
