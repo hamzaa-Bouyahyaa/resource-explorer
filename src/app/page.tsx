@@ -1,56 +1,40 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useCharacters } from "@/hooks";
-import { CharacterGrid } from "@/components/features/character-grid";
-import { Pagination } from "@/components/features/pagination";
-import { CharacterFilters } from "@/types";
+import { useCharacters, useUrlState } from "@/hooks";
+import {
+  CharacterGrid,
+  SearchFilterBar,
+  Pagination,
+} from "@/components/features";
+import { sortCharacters } from "@/lib";
 import { PAGINATION } from "@/constants";
 
 export default function Home() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const {
+    debouncedFilters,
+    sortConfig,
+    hasActiveFilters,
+    searchTerm,
+    updateFilter,
+    updateSort,
+    clearFilters,
+  } = useUrlState();
 
-  // Extract filters from URL search params
-  const filters: CharacterFilters = useMemo(() => {
-    const page = searchParams.get("page");
-    const name = searchParams.get("q");
-    const status = searchParams.get("status");
-    const species = searchParams.get("species");
-    const gender = searchParams.get("gender");
-    const type = searchParams.get("type");
+  // Fetch characters data using debounced filters
+  const { data, isLoading, isError, error, refetch } =
+    useCharacters(debouncedFilters);
 
-    return {
-      page: page ? parseInt(page, 10) : PAGINATION.DEFAULT_PAGE,
-      name: name || undefined,
-      status: (status as CharacterFilters["status"]) || undefined,
-      species: species || undefined,
-      gender: (gender as CharacterFilters["gender"]) || undefined,
-      type: type || undefined,
-    };
-  }, [searchParams]);
+  // Apply client-side sorting to the fetched characters
+  const sortedCharacters = useMemo(() => {
+    if (!data?.results) return [];
+    return sortCharacters(data.results, sortConfig);
+  }, [data?.results, sortConfig]);
 
-  // Fetch characters data
-  const { data, isLoading, isError, error, refetch } = useCharacters(filters);
-
-  // Handle page change
-  const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", page.toString());
-    router.push(`/?${params.toString()}`);
-  };
-
-  // Handle clearing filters
-  const handleClearFilters = () => {
-    router.push("/");
-  };
-
-  const currentPage = filters.page || PAGINATION.DEFAULT_PAGE;
+  // Extract pagination and result info
+  const currentPage = debouncedFilters.page || PAGINATION.DEFAULT_PAGE;
   const totalPages = data?.info.pages || 0;
   const totalItems = data?.info.count || 0;
-  const characters = data?.results || [];
-  const searchTerm = filters.name;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -72,28 +56,48 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Search and Filter Bar */}
+        <div className="mb-8">
+          <SearchFilterBar
+            searchTerm={searchTerm}
+            onSearchChange={(value) => updateFilter("name", value)}
+            status={debouncedFilters.status || ""}
+            onStatusChange={(value) => updateFilter("status", value)}
+            gender={debouncedFilters.gender || ""}
+            onGenderChange={(value) => updateFilter("gender", value)}
+            species={debouncedFilters.species || ""}
+            onSpeciesChange={(value) => updateFilter("species", value)}
+            sortConfig={sortConfig}
+            onSortChange={(key, direction) => updateSort({ key, direction })}
+            hasActiveFilters={hasActiveFilters}
+            onClearFilters={clearFilters}
+            isLoading={isLoading}
+            totalResults={totalItems}
+          />
+        </div>
+
         {/* Character Grid */}
         <div className="mb-8">
           <CharacterGrid
-            characters={characters}
+            characters={sortedCharacters}
             isLoading={isLoading}
             isError={isError}
             error={error}
             onRetry={refetch}
             searchTerm={searchTerm}
-            onClearFilters={handleClearFilters}
+            onClearFilters={clearFilters}
           />
         </div>
 
         {/* Pagination */}
-        {!isLoading && !isError && characters.length > 0 && (
+        {!isLoading && !isError && sortedCharacters.length > 0 && (
           <div className="mt-8">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
               totalItems={totalItems}
               itemsPerPage={PAGINATION.ITEMS_PER_PAGE}
-              onPageChange={handlePageChange}
+              onPageChange={(page) => updateFilter("page", page)}
               showInfo={true}
             />
           </div>
