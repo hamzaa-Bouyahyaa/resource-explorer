@@ -40,12 +40,19 @@ export function EmptyState({
   );
 
   return (
-    <div className={`text-center py-12 ${className}`}>
-      <div className="mb-4">{icon || defaultIcon}</div>
+    <div className={`text-center py-16 px-6 ${className}`}>
+      <div className="mb-6 relative">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full opacity-50" />
+        </div>
+        <div className="relative">{icon || defaultIcon}</div>
+      </div>
 
-      <h3 className="text-lg font-medium text-gray-900 mb-2">{title}</h3>
+      <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
 
-      <p className="text-gray-600 mb-6 max-w-md mx-auto">{description}</p>
+      <p className="text-gray-600 mb-8 max-w-lg mx-auto leading-relaxed">
+        {description}
+      </p>
 
       {action && <div>{action}</div>}
 
@@ -55,14 +62,14 @@ export function EmptyState({
           {actionHref ? (
             <Link
               href={actionHref}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-semibold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
             >
               {actionLabel}
             </Link>
           ) : (
             <button
               onClick={onAction}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-semibold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
             >
               {actionLabel}
             </button>
@@ -111,8 +118,21 @@ export function NoResultsFound({
   const action = onClearFilters ? (
     <button
       onClick={onClearFilters}
-      className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+      className="inline-flex items-center px-6 py-3 border border-gray-200 text-sm font-semibold rounded-2xl text-gray-700 bg-white/80 backdrop-blur-sm hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
     >
+      <svg
+        className="w-4 h-4 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
       Clear filters
     </button>
   ) : undefined;

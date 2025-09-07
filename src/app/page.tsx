@@ -80,11 +80,17 @@ function HomeContent() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl" />
+      </div>
+
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Search and Filter Bar */}
-        <div className="mb-8">
+        <div className="mb-8 sm:mb-12">
           <SearchFilterBar
             filterState={finalFilterState}
             filterActions={filterActions}
@@ -92,7 +98,7 @@ function HomeContent() {
         </div>
 
         {/* Character Grid */}
-        <div className="mb-8">
+        <div className="mb-8 sm:mb-12">
           <CharacterGrid
             characters={processedCharacters}
             isLoading={isLoading}
@@ -109,7 +115,7 @@ function HomeContent() {
           !isError &&
           processedCharacters.length > 0 &&
           !showFavoritesOnly && (
-            <div className="mt-8">
+            <div className="mt-8 sm:mt-12">
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -129,8 +135,11 @@ export default function Home() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <Loading className="w-12 h-12" />
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center">
+          <div className="text-center">
+            <Loading className="w-16 h-16 mb-4" />
+            <p className="text-gray-600 font-medium">Loading characters...</p>
+          </div>
         </div>
       }
     >

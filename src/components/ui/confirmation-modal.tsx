@@ -69,7 +69,7 @@ export function ConfirmationModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
@@ -77,20 +77,37 @@ export function ConfirmationModal({
       aria-describedby="modal-description"
     >
       <div
-        className={`bg-white rounded-lg p-6 w-full ${maxWidthClasses[maxWidth]} transform transition-all duration-200 ease-out`}
+        className={`bg-white rounded-2xl p-8 w-full ${maxWidthClasses[maxWidth]} transform transition-all duration-300 ease-out shadow-2xl border border-gray-100`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal header */}
-        <div className="flex items-start justify-between mb-4">
-          <h3 id="modal-title" className="text-lg font-medium text-gray-900">
-            {title}
-          </h3>
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+              <svg
+                className="w-5 h-5 text-red-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
+                />
+              </svg>
+            </div>
+            <h3 id="modal-title" className="text-xl font-bold text-gray-900">
+              {title}
+            </h3>
+          </div>
 
           {/* Close button */}
           <button
             onClick={onClose}
             disabled={isLoading}
-            className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 rounded-md p-1 disabled:opacity-50"
+            className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 rounded-lg p-2 hover:bg-gray-50 disabled:opacity-50 transition-all"
             aria-label="Close modal"
           >
             <svg

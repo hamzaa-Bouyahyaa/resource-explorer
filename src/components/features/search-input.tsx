@@ -29,11 +29,11 @@ export function SearchInput({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative group ${className}`}>
       {/* Search Icon */}
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
         <svg
-          className="h-5 w-5 text-gray-400"
+          className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-300"
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"
@@ -55,11 +55,13 @@ export function SearchInput({
         placeholder={placeholder}
         disabled={disabled}
         className={`
-          block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md
-          placeholder-gray-500 text-gray-900 text-sm
-          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+          block w-full pl-12 pr-12 py-3.5 border border-gray-200 rounded-2xl
+          placeholder-gray-400 text-gray-900 text-sm font-medium
+          bg-white/50 backdrop-blur-sm
+          focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 focus:bg-white
           disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed
-          transition-colors duration-200
+          transition-all duration-300 shadow-sm hover:shadow-md focus:shadow-lg
+          group-hover:border-gray-300
         `}
         aria-label="Search characters"
       />
@@ -69,22 +71,27 @@ export function SearchInput({
         <button
           type="button"
           onClick={handleClear}
-          className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-700 transition-colors"
+          className="absolute inset-y-0 right-0 pr-4 flex items-center hover:text-gray-700 transition-all duration-300 group"
           aria-label="Clear search"
         >
-          <svg
-            className="h-5 w-5 text-gray-400 hover:text-gray-600"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <div className="p-1 rounded-full hover:bg-gray-100 transition-colors duration-200">
+            <svg
+              className="h-4 w-4 text-gray-400 hover:text-gray-600"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
         </button>
       )}
+
+      {/* Focus ring enhancement */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
   );
 }

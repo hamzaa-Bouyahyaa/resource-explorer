@@ -35,22 +35,33 @@ export default function FavoritesPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <LoadingSpinner className="w-12 h-12" />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <LoadingSpinner className="w-16 h-16 mb-4" />
+          <p className="text-gray-600 font-medium">Loading favorites...</p>
+        </div>
       </div>
     );
   }
 
   if (isEmpty) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative container mx-auto px-4 py-8 sm:py-12">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              My Favorites
+          <div className="text-center mb-12">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              <span className="bg-gradient-to-r from-red-600 via-pink-600 to-red-800 bg-clip-text text-transparent">
+                My Favorites
+              </span>
             </h1>
-            <p className="text-gray-600">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Characters you&apos;ve marked as favorites will appear here
             </p>
           </div>
@@ -68,42 +79,51 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative container mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                My Favorites
+        <div className="mb-10 sm:mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                <span className="bg-gradient-to-r from-red-600 via-pink-600 to-red-800 bg-clip-text text-transparent">
+                  My Favorites
+                </span>
               </h1>
-              <p className="text-gray-600">
-                {count} favorite character{count !== 1 ? "s" : ""}
+              <p className="text-lg text-gray-600">
+                {count} favorite character{count !== 1 ? "s" : ""} in your
+                collection
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3 justify-center sm:justify-end">
               <button
                 onClick={() => setShowStatistics(!showStatistics)}
-                className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
               >
                 {showStatistics ? "Hide" : "Show"} Stats
               </button>
               <button
                 onClick={() => downloadFavorites("json")}
-                className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors"
+                className="px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
               >
                 Export JSON
               </button>
               <button
                 onClick={() => downloadFavorites("csv")}
-                className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors"
+                className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
               >
                 Export CSV
               </button>
               <button
                 onClick={clearFavorites}
-                className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+                className="px-5 py-2.5 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
               >
                 Clear All
               </button>
@@ -113,46 +133,54 @@ export default function FavoritesPage() {
 
         {/* Statistics Panel */}
         {showStatistics && (
-          <div className="mb-8 bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Statistics
+          <div className="mb-10 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-100">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Collection Statistics
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-blue-50 rounded-lg p-4">
-                <p className="text-blue-600 font-medium">Total Favorites</p>
-                <p className="text-2xl font-bold text-blue-900">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
+                <p className="text-blue-700 font-semibold mb-2">
+                  Total Favorites
+                </p>
+                <p className="text-3xl font-bold text-blue-900">
                   {statistics.total}
                 </p>
               </div>
 
-              <div className="bg-green-50 rounded-lg p-4">
-                <p className="text-green-600 font-medium">Alive Characters</p>
-                <p className="text-2xl font-bold text-green-900">
+              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200">
+                <p className="text-green-700 font-semibold mb-2">
+                  Alive Characters
+                </p>
+                <p className="text-3xl font-bold text-green-900">
                   {statistics.byStatus.Alive || 0}
                 </p>
               </div>
 
-              <div className="bg-red-50 rounded-lg p-4">
-                <p className="text-red-600 font-medium">Dead Characters</p>
-                <p className="text-2xl font-bold text-red-900">
+              <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 border border-red-200">
+                <p className="text-red-700 font-semibold mb-2">
+                  Dead Characters
+                </p>
+                <p className="text-3xl font-bold text-red-900">
                   {statistics.byStatus.Dead || 0}
                 </p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-gray-600 font-medium">Unknown Status</p>
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200">
+                <p className="text-gray-700 font-semibold mb-2">
+                  Unknown Status
+                </p>
+                <p className="text-3xl font-bold text-gray-900">
                   {statistics.byStatus.unknown || 0}
                 </p>
               </div>
             </div>
 
             {statistics.mostRecentlyAdded && (
-              <div className="mt-4 p-4 bg-purple-50 rounded-lg">
-                <p className="text-purple-600 font-medium mb-2">
+              <div className="mt-6 p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl border border-purple-200">
+                <p className="text-purple-700 font-semibold mb-3">
                   Most Recently Added
                 </p>
-                <p className="text-purple-900 font-semibold">
+                <p className="text-purple-900 font-bold text-lg">
                   {statistics.mostRecentlyAdded.name}
                 </p>
                 <p className="text-purple-700 text-sm">
@@ -167,38 +195,72 @@ export default function FavoritesPage() {
         )}
 
         {/* Search and Sort Controls */}
-        <div className="mb-6 bg-white rounded-lg shadow-md p-4">
+        <div className="mb-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-gray-100">
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Search */}
-            <div className="flex-1">
+            <div className="flex-1 group">
               <label htmlFor="search" className="sr-only">
                 Search favorites
               </label>
-              <input
-                id="search"
-                type="text"
-                placeholder="Search your favorites..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg
+                    className="h-5 w-5 text-gray-400 group-focus-within:text-red-500 transition-colors duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  id="search"
+                  type="text"
+                  placeholder="Search your favorites..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-2xl placeholder-gray-400 text-gray-900 font-medium bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 focus:bg-white transition-all duration-300 shadow-sm hover:shadow-md focus:shadow-lg"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-500/10 to-pink-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              </div>
             </div>
 
             {/* Sort */}
-            <div className="sm:w-48">
+            <div className="sm:w-56 group">
               <label htmlFor="sort" className="sr-only">
                 Sort by
               </label>
-              <select
-                id="sort"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="addedAt">Recently Added</option>
-                <option value="name">Name (A-Z)</option>
-                <option value="status">Status</option>
-              </select>
+              <div className="relative">
+                <select
+                  id="sort"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  className="w-full px-4 py-3.5 border border-gray-200 rounded-2xl bg-white/50 backdrop-blur-sm text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 focus:bg-white transition-all duration-300 appearance-none shadow-sm hover:shadow-md focus:shadow-lg"
+                >
+                  <option value="addedAt">Recently Added</option>
+                  <option value="name">Name (A-Z)</option>
+                  <option value="status">Status</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg
+                    className="h-5 w-5 text-gray-400 group-focus-within:text-red-500 transition-colors duration-300"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-500/10 to-pink-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              </div>
             </div>
           </div>
         </div>

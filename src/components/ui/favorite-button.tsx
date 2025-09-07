@@ -43,7 +43,7 @@ export function FavoriteButton({
   // Variant classes
   const getVariantClasses = () => {
     const baseClasses =
-      "transition-all duration-200 flex items-center justify-center rounded-full";
+      "transition-all duration-300 flex items-center justify-center rounded-full group-hover:scale-110 active:scale-95";
 
     if (disabled) {
       return `${baseClasses} opacity-50 cursor-not-allowed bg-gray-100 text-gray-400`;
@@ -52,20 +52,20 @@ export function FavoriteButton({
     if (isFavorited) {
       switch (variant) {
         case "filled":
-          return `${baseClasses} bg-red-500 text-white hover:bg-red-600 shadow-md hover:shadow-lg`;
+          return `${baseClasses} bg-gradient-to-r from-red-500 to-pink-500 text-white hover:from-red-600 hover:to-pink-600 shadow-lg hover:shadow-xl shadow-red-500/25 hover:shadow-red-500/40`;
         case "outline":
-          return `${baseClasses} bg-white border-2 border-red-500 text-red-500 hover:bg-red-50`;
+          return `${baseClasses} bg-white/95 backdrop-blur-sm border-2 border-red-500 text-red-500 hover:bg-red-50 hover:border-red-600 shadow-lg`;
         case "ghost":
-          return `${baseClasses} bg-transparent text-red-500 hover:bg-red-50`;
+          return `${baseClasses} bg-red-50/80 backdrop-blur-sm text-red-500 hover:bg-red-100/80 hover:text-red-600`;
       }
     } else {
       switch (variant) {
         case "filled":
-          return `${baseClasses} bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-red-500`;
+          return `${baseClasses} bg-white/90 backdrop-blur-sm text-gray-500 hover:bg-white hover:text-red-500 shadow-lg hover:shadow-xl border border-white/20`;
         case "outline":
-          return `${baseClasses} bg-white border-2 border-gray-300 text-gray-600 hover:border-red-500 hover:text-red-500`;
+          return `${baseClasses} bg-white/95 backdrop-blur-sm border-2 border-gray-300 text-gray-600 hover:border-red-500 hover:text-red-500 hover:bg-red-50 shadow-lg`;
         case "ghost":
-          return `${baseClasses} bg-transparent text-gray-600 hover:text-red-500 hover:bg-gray-50`;
+          return `${baseClasses} bg-gray-50/80 backdrop-blur-sm text-gray-600 hover:text-red-500 hover:bg-red-50/80`;
       }
     }
   };
