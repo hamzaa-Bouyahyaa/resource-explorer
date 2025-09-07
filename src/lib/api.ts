@@ -1,8 +1,3 @@
-/**
- * API service layer using Repository pattern
- * Handles all HTTP requests to the Rick & Morty API
- */
-
 import axios, { AxiosResponse } from "axios";
 import {
   ApiResponse,

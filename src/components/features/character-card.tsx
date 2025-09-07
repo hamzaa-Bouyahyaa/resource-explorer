@@ -1,7 +1,3 @@
-/**
- * Character card component for displaying character information in lists
- */
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,9 +9,6 @@ interface CharacterCardProps {
   className?: string;
 }
 
-/**
- * Individual character card component
- */
 export function CharacterCard({
   character,
   className = "",

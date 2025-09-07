@@ -1,8 +1,3 @@
-/**
- * Notes context implementing state management for character notes
- * Provides global state management for notes functionality
- */
-
 "use client";
 
 import React, { createContext, useContext, useReducer, useEffect } from "react";

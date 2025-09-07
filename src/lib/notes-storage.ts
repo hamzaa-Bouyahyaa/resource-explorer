@@ -3,9 +3,6 @@ import { CharacterNote, NoteFormData } from "@/types";
 const STORAGE_KEY = "character_notes";
 
 export class NotesRepository {
-  /**
-   * Get all notes from localStorage
-   */
   static getNotes(): CharacterNote[] {
     try {
       if (typeof window === "undefined") {

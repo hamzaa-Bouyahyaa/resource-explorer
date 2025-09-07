@@ -1,7 +1,3 @@
-/**
- * Search input component with debounced functionality
- */
-
 import React, { useId } from "react";
 
 interface SearchInputProps {

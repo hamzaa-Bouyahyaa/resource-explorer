@@ -1,7 +1,3 @@
-/**
- * Sort dropdown component for ordering results
- */
-
 import React, { useId } from "react";
 import { SortConfig, SortOption, SortDirection } from "@/types";
 

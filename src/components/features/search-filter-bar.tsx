@@ -11,10 +11,6 @@ interface SearchFilterBarProps {
   className?: string;
 }
 
-/**
- * Combined search and filter bar component
- * Optimized with consolidated props for better maintainability
- */
 export function SearchFilterBar({
   filterState,
   filterActions,

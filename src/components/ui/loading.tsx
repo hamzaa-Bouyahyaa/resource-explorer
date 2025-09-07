@@ -1,7 +1,3 @@
-/**
- * Loading component with skeleton placeholders
- */
-
 import React from "react";
 
 interface LoadingProps {
@@ -9,9 +5,6 @@ interface LoadingProps {
   variant?: "default" | "card" | "list";
 }
 
-/**
- * Reusable loading skeleton component
- */
 export function Loading({ className = "", variant = "default" }: LoadingProps) {
   const baseClasses = "animate-pulse bg-gray-200 rounded";
 

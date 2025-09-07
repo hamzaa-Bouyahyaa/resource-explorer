@@ -1,8 +1,3 @@
-/**
- * Favorites context implementing Observer pattern
- * Provides global state management for favorites functionality
- */
-
 "use client";
 
 import React, { createContext, useContext, useReducer, useEffect } from "react";

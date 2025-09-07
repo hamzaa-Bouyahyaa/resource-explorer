@@ -1,7 +1,3 @@
-/**
- * Navigation component for the application
- */
-
 "use client";
 
 import React from "react";
@@ -9,9 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useFavorites } from "@/hooks";
 
-/**
- * Main navigation component
- */
 export function Navigation() {
   const pathname = usePathname();
   const { count } = useFavorites();

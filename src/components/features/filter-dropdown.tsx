@@ -1,7 +1,3 @@
-/**
- * Filter dropdown components for character filtering
- */
-
 import React, { useId } from "react";
 
 interface FilterOption {
@@ -18,9 +14,6 @@ interface FilterDropdownProps {
   disabled?: boolean;
 }
 
-/**
- * Generic filter dropdown component
- */
 export function FilterDropdown({
   label,
   value,

@@ -1,8 +1,3 @@
-/**
- * Custom hook for debouncing values
- * Prevents excessive API calls during user input
- */
-
 import { useState, useEffect } from "react";
 
 /**

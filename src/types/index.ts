@@ -1,7 +1,3 @@
-/**
- * Central export file for all TypeScript types
- */
-
 export type {
   Character,
   Episode,

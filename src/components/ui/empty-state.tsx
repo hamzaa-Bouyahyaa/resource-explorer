@@ -1,7 +1,3 @@
-/**
- * Empty state components for when no data is available
- */
-
 import React from "react";
 import Link from "next/link";
 
@@ -16,9 +12,6 @@ interface EmptyStateProps {
   className?: string;
 }
 
-/**
- * Generic empty state component
- */
 export function EmptyState({
   title,
   description,

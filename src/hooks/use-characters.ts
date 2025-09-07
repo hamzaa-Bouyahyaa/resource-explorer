@@ -1,16 +1,8 @@
-/**
- * Custom hook for character data fetching with React Query
- */
-
 import { useQuery } from "@tanstack/react-query";
 import { CharacterRepository, apiUtils } from "@/lib";
 import { CharacterFilters, ApiResponse, Character } from "@/types";
 import { queryKeys } from "@/lib/query-client";
 
-/**
- * Hook to fetch paginated characters with filters
- * Handles 404 responses as "no results found" instead of errors
- */
 export function useCharacters(filters: CharacterFilters = {}) {
   return useQuery({
     queryKey: queryKeys.characters.list(filters),

@@ -1,14 +1,5 @@
-/**
- * Favorites storage service implementing Repository pattern
- * Handles localStorage operations with error handling and type safety
- */
-
 import { FavoriteCharacter, Character } from "@/types";
 
-/**
- * Storage strategy interface for different storage implementations
- * Implements Strategy pattern for storage operations
- */
 interface StorageStrategy {
   getItem(key: string): string | null;
   setItem(key: string, value: string): void;

@@ -1,25 +1,13 @@
-/**
- * React Query configuration and setup
- */
-
 import { QueryClient } from "@tanstack/react-query";
 
-/**
- * Create a new QueryClient instance with optimized defaults
- */
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // Cache data for 5 minutes
       staleTime: 1000 * 60 * 5,
-      // Keep data in cache for 10 minutes
       gcTime: 1000 * 60 * 10,
-      // Retry failed requests 3 times with exponential backoff
       retry: 3,
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-      // Refetch on window focus only if data is stale
       refetchOnWindowFocus: "always",
-      // Don't refetch on reconnect unless data is stale
       refetchOnReconnect: "always",
     },
     mutations: {

@@ -1,16 +1,8 @@
-/**
- * Reusable confirmation modal component
- * Provides a consistent interface for confirmation dialogs throughout the app
- */
-
 "use client";
 
 import React from "react";
 import { FormButton } from "./form-field";
 
-/**
- * Props for ConfirmationModal component
- */
 interface ConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;

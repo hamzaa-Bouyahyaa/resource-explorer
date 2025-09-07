@@ -1,9 +1,3 @@
-/**
- * Custom hook for URL state management with debouncing
- * Implements the Observer pattern for URL state synchronization
- * Uses Command pattern for filter updates
- */
-
 import { useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CharacterFilters, SortConfig } from "@/types";

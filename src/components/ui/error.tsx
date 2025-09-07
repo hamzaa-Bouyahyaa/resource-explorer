@@ -1,7 +1,3 @@
-/**
- * Error display and handling components
- */
-
 import React from "react";
 import { ApiError } from "@/types";
 

@@ -1,7 +1,3 @@
-/**
- * Favorite button component for toggling favorite status
- */
-
 import React from "react";
 import { useCharacterFavorite } from "@/hooks";
 import { Character } from "@/types";

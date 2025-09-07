@@ -1,8 +1,3 @@
-/**
- * Custom hook for managing filter state and actions
- * Provides a clean interface for SearchFilterBar component
- */
-
 import { useMemo } from "react";
 import { FilterState, FilterActions } from "@/types";
 import { useUrlState } from "@/hooks";
@@ -12,10 +7,6 @@ interface UseFilterStateProps {
   totalResults?: number;
 }
 
-/**
- * Hook that consolidates filter state and actions for SearchFilterBar
- * Reduces prop drilling and improves component maintainability
- */
 export function useFilterState({
   isLoading = false,
   totalResults,

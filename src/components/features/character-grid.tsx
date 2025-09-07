@@ -1,7 +1,3 @@
-/**
- * Character grid component for displaying a grid of character cards
- */
-
 import React from "react";
 import { Character } from "@/types";
 import { CharacterCard } from "./character-card";
@@ -18,9 +14,6 @@ interface CharacterGridProps {
   className?: string;
 }
 
-/**
- * Grid layout component for character cards
- */
 export function CharacterGrid({
   characters,
   isLoading = false,

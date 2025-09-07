@@ -6,16 +6,10 @@ import { useNotes } from "@/contexts/notes-context";
 import { DeleteConfirmationModal, useConfirmationModal } from "@/components/ui";
 import { NoteForm } from "./note-form";
 
-/**
- * Props for NotesSection component
- */
 interface NotesSectionProps {
   character: Character;
 }
 
-/**
- * Individual note display component
- */
 interface NoteItemProps {
   note: CharacterNote;
   onEdit: (note: CharacterNote) => void;

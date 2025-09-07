@@ -1,20 +1,9 @@
-/**
- * Client-side sorting utilities using Strategy Pattern
- * Since the Rick & Morty API doesn't support sorting, we handle it client-side
- */
-
 import { Character, SortConfig, SortOption } from "@/types";
 
-/**
- * Base sorting strategy interface
- */
 interface SortStrategy {
   compare(a: Character, b: Character): number;
 }
 
-/**
- * Name sorting strategy
- */
 class NameSortStrategy implements SortStrategy {
   compare(a: Character, b: Character): number {
     const aValue = a.name.toLowerCase();

@@ -1,8 +1,3 @@
-/**
- * TypeScript definitions for Rick & Morty API
- * Based on the official API documentation: https://rickandmortyapi.com/documentation
- */
-
 export interface Character {
   id: number;
   name: string;

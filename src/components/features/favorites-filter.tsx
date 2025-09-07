@@ -1,7 +1,3 @@
-/**
- * Favorites filter component for filtering characters by favorite status
- */
-
 "use client";
 
 import React from "react";
@@ -13,9 +9,6 @@ interface FavoritesFilterProps {
   className?: string;
 }
 
-/**
- * Toggle filter for showing only favorite characters
- */
 export function FavoritesFilter({
   showFavoritesOnly,
   onToggle,

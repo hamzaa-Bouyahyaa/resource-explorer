@@ -1,7 +1,3 @@
-/**
- * API configuration constants
- */
-
 export const API_BASE_URL = "https://rickandmortyapi.com/api";
 
 export const API_ENDPOINTS = {
@@ -10,9 +6,6 @@ export const API_ENDPOINTS = {
   LOCATIONS: "/location",
 } as const;
 
-/**
- * Default pagination settings
- */
 export const PAGINATION = {
   DEFAULT_PAGE: 1,
   ITEMS_PER_PAGE: 20, // Rick & Morty API returns 20 items per page by default

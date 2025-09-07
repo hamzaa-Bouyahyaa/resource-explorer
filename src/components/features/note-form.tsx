@@ -1,8 +1,3 @@
-/**
- * Note form component with comprehensive validation
- * Provides create and edit functionality for character notes
- */
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -15,9 +10,6 @@ import {
   FormButton,
 } from "@/components/ui/form-field";
 
-/**
- * Props for NoteForm component
- */
 interface NoteFormProps {
   initialData?: CharacterNote;
   onSubmit: (data: NoteFormData) => Promise<void>;

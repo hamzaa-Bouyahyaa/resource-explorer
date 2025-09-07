@@ -1,13 +1,5 @@
-/**
- * Reusable form field components with validation support
- * Provides consistent styling and error handling across forms
- */
-
 import React, { forwardRef } from "react";
 
-/**
- * Base form field wrapper component
- */
 interface FormFieldProps {
   label: string;
   error?: string;

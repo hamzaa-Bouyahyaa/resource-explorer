@@ -1,24 +1,12 @@
-/**
- * Custom hooks for favorites management
- * Provides convenient interfaces for favorites operations
- */
-
 import { useMemo } from "react";
 import { useFavorites as useFavoritesContext } from "@/contexts/favorites-context";
 import { Character, FavoriteCharacter } from "@/types";
 import { favoritesUtils } from "@/lib/favorites-storage";
 
-/**
- * Main favorites hook
- * Re-exports context hook with additional utilities
- */
 export function useFavorites() {
   return useFavoritesContext();
 }
 
-/**
- * Hook for character-specific favorite operations
- */
 export function useCharacterFavorite(character: Character | null) {
   const { isFavorite, toggleFavorite, addFavorite, removeFavorite } =
     useFavorites();

@@ -1,7 +1,3 @@
-/**
- * Favorites page - displays user's favorite characters
- */
-
 "use client";
 
 import React, { useState, useMemo } from "react";
