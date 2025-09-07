@@ -42,3 +42,31 @@ export interface SortConfig {
   key: SortOption;
   direction: SortDirection;
 }
+
+/**
+ * Consolidated filter state interface
+ */
+export interface FilterState {
+  searchTerm: string;
+  status: string;
+  gender: string;
+  species: string;
+  sortConfig: SortConfig;
+  showFavoritesOnly?: boolean;
+  hasActiveFilters: boolean;
+  isLoading?: boolean;
+  totalResults?: number;
+}
+
+/**
+ * Filter action handlers interface
+ */
+export interface FilterActions {
+  onSearchChange: (value: string) => void;
+  onStatusChange: (value: string) => void;
+  onGenderChange: (value: string) => void;
+  onSpeciesChange: (value: string) => void;
+  onSortChange: (key: SortOption, direction: SortDirection) => void;
+  onFavoritesToggle?: (showFavoritesOnly: boolean) => void;
+  onClearFilters: () => void;
+}

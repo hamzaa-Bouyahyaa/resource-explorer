@@ -3,64 +3,44 @@ import { SearchInput } from "./search-input";
 import { StatusFilter, GenderFilter, SpeciesFilter } from "./filter-dropdown";
 import { SortDropdown } from "./sort-dropdown";
 import { FavoritesFilter } from "./favorites-filter";
-import { SortConfig, SortOption, SortDirection } from "@/types";
+import { FilterState, FilterActions } from "@/types";
 
 interface SearchFilterBarProps {
-  // Search
-  searchTerm: string;
-  onSearchChange: (value: string) => void;
-
-  // Filters
-  status: string;
-  onStatusChange: (value: string) => void;
-  gender: string;
-  onGenderChange: (value: string) => void;
-  species: string;
-  onSpeciesChange: (value: string) => void;
-
-  // Sort
-  sortConfig: SortConfig;
-  onSortChange: (key: SortOption, direction: SortDirection) => void;
-
-  // Favorites filter
-  showFavoritesOnly?: boolean;
-  onFavoritesToggle?: (showFavoritesOnly: boolean) => void;
-
-  // Clear filters
-  hasActiveFilters: boolean;
-  onClearFilters: () => void;
-
-  // Loading state
-  isLoading?: boolean;
-
-  // Results info
-  totalResults?: number;
-
+  filterState: FilterState;
+  filterActions: FilterActions;
   className?: string;
 }
 
 /**
  * Combined search and filter bar component
+ * Optimized with consolidated props for better maintainability
  */
 export function SearchFilterBar({
-  searchTerm,
-  onSearchChange,
-  status,
-  onStatusChange,
-  gender,
-  onGenderChange,
-  species,
-  onSpeciesChange,
-  sortConfig,
-  onSortChange,
-  showFavoritesOnly,
-  onFavoritesToggle,
-  hasActiveFilters,
-  onClearFilters,
-  isLoading = false,
-  totalResults,
+  filterState,
+  filterActions,
   className = "",
 }: SearchFilterBarProps) {
+  const {
+    searchTerm,
+    status,
+    gender,
+    species,
+    sortConfig,
+    showFavoritesOnly,
+    hasActiveFilters,
+    isLoading = false,
+    totalResults,
+  } = filterState;
+
+  const {
+    onSearchChange,
+    onStatusChange,
+    onGenderChange,
+    onSpeciesChange,
+    onSortChange,
+    onFavoritesToggle,
+    onClearFilters,
+  } = filterActions;
   return (
     <div
       className={`bg-white border border-gray-200 rounded-lg shadow-sm p-4 ${className}`}

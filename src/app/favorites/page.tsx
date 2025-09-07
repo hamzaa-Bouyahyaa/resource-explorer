@@ -7,8 +7,7 @@
 import React, { useState, useMemo } from "react";
 import { useFavoritesList, useFavoritesPersistence } from "@/hooks";
 import { CharacterCard } from "@/components/features/character-card";
-import { Loading, EmptyState } from "@/components/ui";
-import { LabeledFavoriteButton } from "@/components/ui/favorite-button";
+import { LoadingSpinner, EmptyState } from "@/components/ui";
 import { Character } from "@/types";
 
 type SortOption = "name" | "addedAt" | "status";
@@ -19,10 +18,8 @@ export default function FavoritesPage() {
   const [showStatistics, setShowStatistics] = useState(false);
 
   const {
-    favorites,
     count,
     isEmpty,
-    hasData,
     isLoading,
     getFilteredFavorites,
     getStatistics,
@@ -43,7 +40,7 @@ export default function FavoritesPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loading variant="spinner" size="lg" />
+        <LoadingSpinner className="w-12 h-12" />
       </div>
     );
   }
@@ -58,7 +55,7 @@ export default function FavoritesPage() {
               My Favorites
             </h1>
             <p className="text-gray-600">
-              Characters you've marked as favorites will appear here
+              Characters you&apos;ve marked as favorites will appear here
             </p>
           </div>
 

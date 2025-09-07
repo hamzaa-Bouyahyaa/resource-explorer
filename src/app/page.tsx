@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, Suspense } from "react";
-import { useCharacters, useUrlState, useFavorites } from "@/hooks";
+import { useCharacters, useFilterState, useFavorites } from "@/hooks";
 import {
   CharacterGrid,
   SearchFilterBar,
@@ -13,23 +13,35 @@ import { PAGINATION } from "@/constants";
 import { FavoriteCharacter } from "@/types";
 
 function HomeContent() {
+  const { favorites } = useFavorites();
+
+  // Get filter state and actions with consolidated interface
   const {
+    filterState,
+    filterActions,
     debouncedFilters,
     sortConfig,
-    hasActiveFilters,
     searchTerm,
     showFavoritesOnly,
     updateFilter,
-    updateSort,
-    toggleFavoritesFilter,
     clearFilters,
-  } = useUrlState();
-
-  const { favorites } = useFavorites();
+  } = useFilterState();
 
   // Fetch characters data using debounced filters
   const { data, isLoading, isError, error, refetch } =
     useCharacters(debouncedFilters);
+
+  // Update filter state with actual data
+  const updatedFilterState = useMemo(
+    () => ({
+      ...filterState,
+      isLoading,
+      totalResults: showFavoritesOnly
+        ? 0 // Will be calculated from processedCharacters
+        : data?.info.count || 0,
+    }),
+    [filterState, isLoading, showFavoritesOnly, data?.info.count]
+  );
 
   // Apply client-side sorting and favorites filtering to the fetched characters
   const processedCharacters = useMemo(() => {
@@ -58,6 +70,15 @@ function HomeContent() {
     ? processedCharacters.length
     : data?.info.count || 0;
 
+  // Final filter state with correct totalResults
+  const finalFilterState = useMemo(
+    () => ({
+      ...updatedFilterState,
+      totalResults: totalItems,
+    }),
+    [updatedFilterState, totalItems]
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Main Content */}
@@ -65,22 +86,8 @@ function HomeContent() {
         {/* Search and Filter Bar */}
         <div className="mb-8">
           <SearchFilterBar
-            searchTerm={searchTerm}
-            onSearchChange={(value) => updateFilter("name", value)}
-            status={debouncedFilters.status || ""}
-            onStatusChange={(value) => updateFilter("status", value)}
-            gender={debouncedFilters.gender || ""}
-            onGenderChange={(value) => updateFilter("gender", value)}
-            species={debouncedFilters.species || ""}
-            onSpeciesChange={(value) => updateFilter("species", value)}
-            sortConfig={sortConfig}
-            onSortChange={(key, direction) => updateSort({ key, direction })}
-            showFavoritesOnly={showFavoritesOnly}
-            onFavoritesToggle={toggleFavoritesFilter}
-            hasActiveFilters={hasActiveFilters}
-            onClearFilters={clearFilters}
-            isLoading={isLoading}
-            totalResults={totalItems}
+            filterState={finalFilterState}
+            filterActions={filterActions}
           />
         </div>
 

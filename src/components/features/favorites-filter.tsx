@@ -80,12 +80,6 @@ export function FavoritesFilter({
           </span>
         )}
       </button>
-
-      {showFavoritesOnly && (
-        <span className="text-sm text-gray-500">
-          Showing {count} favorite{count !== 1 ? "s" : ""}
-        </span>
-      )}
     </div>
   );
 }
