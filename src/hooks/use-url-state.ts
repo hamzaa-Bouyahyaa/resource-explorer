@@ -50,6 +50,11 @@ export function useUrlState() {
     };
   }, [searchParams]);
 
+  // Extract favorites filter from URL
+  const showFavoritesOnly = useMemo(() => {
+    return searchParams.get("favorites") === "true";
+  }, [searchParams]);
+
   // Extract sort configuration from URL
   const sortConfig: SortConfig = useMemo(() => {
     const sortBy = searchParams.get("sortBy") || "name";
@@ -145,6 +150,28 @@ export function useUrlState() {
   );
 
   /**
+   * Toggle favorites filter
+   */
+  const toggleFavoritesFilter = useCallback(
+    (showFavorites: boolean) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (showFavorites) {
+        params.set("favorites", "true");
+      } else {
+        params.delete("favorites");
+      }
+
+      // Reset to first page when favorites filter changes
+      params.delete("page");
+
+      const newUrl = `/?${params.toString()}`;
+      router.push(newUrl);
+    },
+    [router, searchParams]
+  );
+
+  /**
    * Clear all filters and reset to defaults
    */
   const clearFilters = useCallback(() => {
@@ -161,10 +188,11 @@ export function useUrlState() {
       filters.species ||
       filters.gender ||
       filters.type ||
+      showFavoritesOnly ||
       sortConfig.key !== "name" ||
       sortConfig.direction !== "asc"
     );
-  }, [filters, sortConfig]);
+  }, [filters, sortConfig, showFavoritesOnly]);
 
   return {
     // Current state
@@ -172,10 +200,12 @@ export function useUrlState() {
     debouncedFilters,
     sortConfig,
     hasActiveFilters,
+    showFavoritesOnly,
 
     // Optimized update functions
     updateFilter,
     updateSort,
+    toggleFavoritesFilter,
     clearFilters,
 
     // Raw search term (not debounced) for input display

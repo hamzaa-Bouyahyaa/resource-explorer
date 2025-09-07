@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, Suspense } from "react";
+import React, { useMemo, Suspense } from "react";
 import { useCharacters, useUrlState, useFavorites } from "@/hooks";
 import {
   CharacterGrid,
@@ -13,15 +13,15 @@ import { PAGINATION } from "@/constants";
 import { FavoriteCharacter } from "@/types";
 
 function HomeContent() {
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-
   const {
     debouncedFilters,
     sortConfig,
     hasActiveFilters,
     searchTerm,
+    showFavoritesOnly,
     updateFilter,
     updateSort,
+    toggleFavoritesFilter,
     clearFilters,
   } = useUrlState();
 
@@ -76,7 +76,7 @@ function HomeContent() {
             sortConfig={sortConfig}
             onSortChange={(key, direction) => updateSort({ key, direction })}
             showFavoritesOnly={showFavoritesOnly}
-            onFavoritesToggle={setShowFavoritesOnly}
+            onFavoritesToggle={toggleFavoritesFilter}
             hasActiveFilters={hasActiveFilters}
             onClearFilters={clearFilters}
             isLoading={isLoading}
