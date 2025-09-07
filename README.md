@@ -293,7 +293,21 @@ const debouncedSpecies = useDebounce(filters.species || "", 300); // Text inputs
 - ❌ **Cons**: More code complexity, additional testing scenarios
 - **Rationale**: Production-ready applications require robust error handling
 
+## 🧪 Testing Strategy
 
+### Recommended Testing Approach
+
+1. **Unit Tests**: Custom hooks, utility functions, and pure components
+2. **Integration Tests**: Component interactions and data flow
+3. **E2E Tests**: Critical user journeys (search, filter, favorites)
+
+### Testing Tools Recommendation
+
+- **Jest** + **React Testing Library** for unit/integration tests
+- **Playwright** or **Cypress** for E2E tests
+- **MSW** (Mock Service Worker) for API mocking
+
+## 🚀 Deployment
 
 ### Production Build
 
@@ -301,6 +315,26 @@ const debouncedSpecies = useDebounce(filters.species || "", 300); // Text inputs
 npm run build
 npm run start
 ```
+
+## 🔮 Future Enhancements
+
+### Planned Features
+
+1. **Advanced Search**: Full-text search across all character properties
+2. **Infinite Scroll**: Replace pagination with infinite scrolling
+3. **Dark Mode**: Theme switching with system preference detection
+4. **Offline Support**: PWA capabilities with service worker
+5. **Character Comparison**: Side-by-side character comparison tool
+6. **Export Features**: PDF/CSV export of filtered results
+7. **User Accounts**: Server-side favorites synchronization
+8. **Analytics**: User behavior tracking and insights
+
+### Technical Improvements
+
+1. **Micro-frontends**: Split into smaller, deployable units
+2. **GraphQL**: Replace REST API with GraphQL for better data fetching
+3. **Server Components**: Leverage Next.js 13+ server components
+4. **Edge Functions**: Move some logic to edge for better performance
 
 ## 📚 Learning Resources
 
@@ -310,6 +344,13 @@ npm run start
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Rick and Morty API](https://rickandmortyapi.com/documentation)
 
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
