@@ -14,6 +14,11 @@ export type {
   FavoriteCharacter,
   FavoritesState,
   FavoritesActions,
+  CharacterNote,
+  NoteFormData,
+  NoteFormErrors,
+  NotesState,
+  NotesActions,
 } from "./api";
 
 /**

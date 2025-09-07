@@ -109,3 +109,44 @@ export interface FavoritesActions {
   clearFavorites: () => void;
   getFavoriteById: (characterId: number) => FavoriteCharacter | undefined;
 }
+
+/**
+ * Character note types
+ */
+export interface CharacterNote {
+  id: string;
+  characterId: number;
+  title: string;
+  content: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface NoteFormData {
+  title: string;
+  content: string;
+  tags: string[];
+}
+
+export interface NoteFormErrors {
+  title?: string;
+  content?: string;
+  tags?: string;
+  general?: string;
+}
+
+export interface NotesState {
+  notes: CharacterNote[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+export interface NotesActions {
+  addNote: (characterId: number, noteData: NoteFormData) => Promise<void>;
+  updateNote: (noteId: string, noteData: NoteFormData) => Promise<void>;
+  deleteNote: (noteId: string) => Promise<void>;
+  getNotesByCharacterId: (characterId: number) => CharacterNote[];
+  getNoteById: (noteId: string) => CharacterNote | undefined;
+  clearNotes: () => void;
+}

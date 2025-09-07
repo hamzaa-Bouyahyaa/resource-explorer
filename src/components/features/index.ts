@@ -6,3 +6,5 @@ export { StatusFilter, GenderFilter, SpeciesFilter } from "./filter-dropdown";
 export { SortDropdown } from "./sort-dropdown";
 export { SearchFilterBar } from "./search-filter-bar";
 export { FavoritesFilter, CompactFavoritesFilter } from "./favorites-filter";
+export { NoteForm } from "./note-form";
+export { NotesSection } from "./notes-section";

@@ -1,9 +1,5 @@
 "use client";
 
-/**
- * Character detail page component
- */
-
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -11,11 +7,9 @@ import Image from "next/image";
 import { useCharacter } from "@/hooks";
 import { Loading, ErrorDisplay } from "@/components/ui";
 import { LabeledFavoriteButton } from "@/components/ui/favorite-button";
+import { NotesSection } from "@/components/features";
 import { apiUtils } from "@/lib";
 
-/**
- * Character detail page component
- */
 export default function CharacterDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -263,6 +257,11 @@ export default function CharacterDetailPage() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Notes Section */}
+        <div className="mt-8">
+          <NotesSection character={character} />
         </div>
 
         {/* Actions */}
